@@ -26,4 +26,12 @@ class Product < ActiveRecord::Base
       true
     end
   end
+
+  def self.sorted_by(col)
+    if self.column_names.include?(col)
+      self.order(col)
+    else
+      self.order("name")
+    end
+  end
 end
