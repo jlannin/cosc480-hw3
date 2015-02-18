@@ -1,3 +1,13 @@
 #main
+  %h3
+    =precede "Product Details For " do
+      %span= @product.name
   %table.products_table
-
+    %th Description
+    %th Appropriate ages
+    %th Price
+    %tr
+      %td= @product.description
+      %td= @product.age_range
+      %td#price= number_to_currency(@product.price)
+  = link_to "Back to product list", products_path
