@@ -1,7 +1,6 @@
 #main
   %h3
-    =precede "Product Details For " do
-      %span= @product.name
+    = "Product Details For #{@product.name}"
   %table.products_table
     %th Description
     %th Appropriate ages

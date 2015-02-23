@@ -15,7 +15,7 @@ RSpec.describe "index page", type: :feature do
 
   it "should show the products in name order by default" do
     names = []
-    page.all(".productname").each { |x| names << x.text }
+    page.all(".productname").each { |x| names << x.text}
     expect(names).to match_array(names.sort)
   end
 
