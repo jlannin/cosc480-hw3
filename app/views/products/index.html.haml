@@ -1,14 +1,18 @@
 #main
+  %h4= flash[:notice] if flash[:notice]
   %h3 All products
   %table.products_table
     %tr.products_header
       %th= link_to "Name", controller: "products", query: "name"
+      %th Image
       %th Description
       %th= link_to "Appropriate ages", controller: "products", query: "minimum_age_appropriate"
       %th= link_to "Price", controller: "products", query: "price"
     -@products.each do |p|
       %tr
         %td.productname= link_to p.name, product_path(p.id)
+        %td= image_tag(p.image.url(:thumb))
         %td= p.description
         %td= p.age_range
         %td#price= number_to_currency(p.price)
+  = link_to "Create a new product", new_product_path
