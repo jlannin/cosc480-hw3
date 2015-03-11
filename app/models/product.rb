@@ -37,4 +37,14 @@ class Product < ActiveRecord::Base
       self.order("name")
     end
   end
+  
+  def self.filter(min_age, max_price)
+    if min_age == nil && max_price == nil
+      self.all
+    elsif min_age == ""
+       self.where("price <= ?", max_price)
+    else
+      self.where("price <= ? AND (minimum_age_appropriate <= ? OR minimum_age_appropriate is NULL) AND (maximum_age_appropriate >= ? or maximum_age_appropriate IS NULL)", max_price, min_age, min_age)
+    end
+  end
 end

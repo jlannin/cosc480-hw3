@@ -52,6 +52,11 @@ RSpec.describe Product, type: :model do
       0.upto(2) { |a| expect(p.age_appropriate?(a)).to be false }
     end
 
+    it "should return false if the specified age is less than 0" do
+      p = Product.new
+      expect(p.age_appropriate?(-10)).to be false
+    end
+
     it "should check that the age is between (inclusive) min and max if both min and max are set" do
       p = Product.new
       p.minimum_age_appropriate = 3

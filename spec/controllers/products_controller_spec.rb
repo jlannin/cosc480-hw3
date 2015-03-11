@@ -37,4 +37,44 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to render_template(:show)
     end
   end
+  
+  describe "create new product" do
+    it "should show success flash message and redirect to index upon successful creation" do
+      p = Product.new
+      expect(Product).to receive(:new) {p}
+      expect(p).to receive(:save) {true}
+      post :create, {:product => {"name"=>"dummy", "price"=> "10.99"}}
+      expect(response).to redirect_to(products_path)
+      flash['notice'] != nil
+    end
+    it "should show failure flash message and redirect to new page upon failure" do
+      p = Product.new
+      expect(Product).to receive(:new) {p}
+      expect(p).to receive(:save) {nil}
+      post :create, {:product => {"name"=>"dummy", "price"=>"10.99"}}
+      expect(response).to redirect_to(new_product_path)
+      flash['warning'] != nil
+    end
+  end
+
+  describe "update product" do
+    it "should show success flash message and redirect to  upon successful update" do
+      p = Product.new
+      expect(Product).to receive(:find).with("1") {p}
+      expect(p).to receive(:update)
+      expect(p).to receive(:save) {true}
+      put :update, {:id => "1", :product => {:name =>"dummy", :price =>"10.99"}}
+      expect(response).to redirect_to(product_path(:id =>"1"))
+      flash['notice'] != nil
+    end
+    it "should show failure flash message and redirect to upon failed update" do
+      p = Product.new
+      expect(Product).to receive(:find).with("1") {p}
+      expect(p).to receive(:update)
+      expect(p).to receive(:save) {nil}
+      put :update, {:id=>"1", :product => {:name =>"dummy", :price =>"10.99"}}
+      expect(response).to redirect_to(edit_product_path(:id =>"1"))
+      flash['warning'] != nil
+    end
+  end
 end

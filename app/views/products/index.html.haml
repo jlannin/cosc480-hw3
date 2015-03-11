@@ -1,15 +1,21 @@
 #main
-  %h4= flash[:notice] if flash[:notice]
+  %h4= flash[:notice] if flash[:notice] 
   %h3 All products
+  = form_tag('/products', method: :get) do
+    = label_tag(:min_age, "Minimum age:")
+    = number_field_tag(:min_age, nil, min: 0)
+    = label_tag(:max_price, "Maximum price:")
+    = number_field_tag(:max_price, nil, min: 0, step: 0.01)
+    = submit_tag("Filter products")
   %table.products_table
     %tr.products_header
-      %th= link_to "Name", controller: "products", query: "name"
+      %th= link_to "Name", products_path(:query => "name")
       %th Image
       %th Description
-      %th= link_to "Appropriate ages", controller: "products", query: "minimum_age_appropriate"
-      %th= link_to "Price", controller: "products", query: "price"
+      %th= link_to "Appropriate ages", products_path(:query => "minimum_age_appropriate")
+      %th= link_to "Price", products_path(:query => "price")
     -@products.each do |p|
-      %tr
+      %tr.productrow
         %td.productname= link_to p.name, product_path(p.id)
         %td= image_tag(p.image.url(:thumb))
         %td= p.description

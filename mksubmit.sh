@@ -1,3 +1,3 @@
 #!/bin/bash
 
-tar cvf hw3.tar app db/migrate config/routes.rb
+tar cvf hw4.tar app db/migrate config/routes.rb
